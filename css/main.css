@@ -1,7 +1,6 @@
 
 canvas {
     display: block;
-    vertical-align: bottom;
   }
   
   #particles-js {
@@ -18,7 +17,7 @@ canvas {
   }
   
   .header1 {
-    font-family: 'Jua';
+    font-family: 'Long Cang', cursive;
     font-size: 7vw;
   }
   
