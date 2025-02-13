@@ -1,6 +1,7 @@
 
 canvas {
     display: block;
+    background-color: #111;
   }
   
   #particles-js {
@@ -38,7 +39,14 @@ canvas {
     margin: 0px 5px 0px 5px;
     transition: 0.5s;
   }
+
+  p {
+    color: #eee
+  }
   
+  .link1 {
+    color: #eee
+  }
   .link1:hover {
     color: #fc7a00;
   }
