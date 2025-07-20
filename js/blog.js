@@ -19,6 +19,14 @@ class BlogSystem {
             // For now, we'll use the sample posts we created
             this.blogPosts = [
                 {
+                    id: 'vibepwning-bdsec-ctf-2025',
+                    title: 'VibePwning - BDSEC CTF 2025',
+                    date: 'June 20, 2025',
+                    category: 'CTF',
+                    excerpt: 'Walkthrough demonstrating AI-assisted buffer overflow exploitation using Claude with Ghidra MCP server. Shows how AI integration can dramatically accelerate reverse engineering and exploit development...',
+                    filename: 'VibePwning - BDSEC CTF 2025.md'
+                },
+                {
                     id: 'paloalto-firewall-hardening',
                     title: 'Palo Alto Firewall Hardening',
                     date: 'February 1, 2025',
@@ -161,19 +169,39 @@ class BlogSystem {
 
     // Convert markdown to HTML using marked.js
     markdownToHtml(markdown) {
-        // Configure marked.js options
+        // Configure marked.js options with syntax highlighting
         marked.setOptions({
             breaks: true, // Convert line breaks to <br>
             gfm: true,    // GitHub Flavored Markdown
             headerIds: true, // Add IDs to headers for linking
             mangle: false,   // Don't escape HTML
-            sanitize: false  // Allow HTML in markdown
+            sanitize: false,  // Allow HTML in markdown
+            highlight: function(code, lang) {
+                if (lang && Prism.languages[lang]) {
+                    try {
+                        return Prism.highlight(code, Prism.languages[lang], lang);
+                    } catch (err) {
+                        console.warn('Prism highlighting failed for language:', lang, err);
+                    }
+                }
+                return code;
+            }
         });
 
         // Parse markdown to HTML
         const html = marked.parse(markdown);
         
-        return html;
+        // Apply syntax highlighting to any code blocks that weren't processed
+        const tempDiv = document.createElement('div');
+        tempDiv.innerHTML = html;
+        const codeBlocks = tempDiv.querySelectorAll('pre code');
+        codeBlocks.forEach(block => {
+            if (!block.classList.contains('language-')) {
+                Prism.highlightElement(block);
+            }
+        });
+        
+        return tempDiv.innerHTML;
     }
 
     // Render a blog post
