@@ -1,12 +1,11 @@
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Sam Dustin</title>
+    <title>Blog - Sam Dustin</title>
     <meta name="author" content="Sam Dustin">
-    <meta name="description" content="Sam is a Cybersecurity student with a passion for learning as much as he can, as well as helping teach that information to others.">
+    <meta name="description" content="Blog posts by Sam Dustin - Cybersecurity, Technology, and Learning">
     
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -24,26 +23,23 @@
   <body>
     <div id="particles-js"></div>
     
-    <!-- Blog link in top right -->
-    <div class="blog-link">
-      <a href="blog.html" class="blog-nav-link">Blog</a>
+    <!-- Back to blog list link -->
+    <div class="back-link">
+      <a href="#" class="back-nav-link"><i class="fas fa-arrow-left"></i> Back</a>
+    </div>
+    
+    <!-- Home link in top right -->
+    <div class="home-link">
+      <a href="index.html" class="home-nav-link">Home</a>
     </div>
     
     <div class="container">
-      <div class="center">
-        <div class="row d-flex flex-wrap align-items-center">
-          <div class="col-md-5">
-            <img class="img-fluid" src="img/avatar.png" alt="Sam Dustin">
-          </div>
-          <div class="col-md">
-            <p class="header1">Sam Dustin</p>
-            <p class="header2">M.S. Homeland Security</p>
-            <p class="header2">B.S. Computer Information Technology</p>
-            <p class="header2">Cybersecurity Specialist & Infrastructure Engineer</p>
-            <a class="link1" href="https://github.com/nopgadget" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Github"><i class="fab fa-github"></i></a>
-            <a class="link1" href="https://www.linkedin.com/in/samueldustin" data-bs-toggle="tooltip" data-bs-placement="bottom" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
-            <a class="link1" href="https://tryhackme.com/p/.root" data-bs-toggle="tooltip" data-bs-placement="bottom" title="TryHackMe"><i class="fa fa-cloud-rain"></i></a>
-          </div>
+      <div class="blog-content">
+        <h1 class="blog-title">Blog</h1>
+        <p class="blog-subtitle">Infodumps, writeups, and random interesting hacks</p>
+        
+        <div class="blog-posts">
+          <!-- Blog posts will be loaded dynamically -->
         </div>
       </div>
     </div>
@@ -56,5 +52,6 @@
     
     <!-- Custom JS -->
     <script src="js/main.js"></script>
+    <script src="js/blog.js"></script>
   </body>
-</html>
+</html> 

@@ -19,12 +19,332 @@ canvas {
 }
 
 #particles-js {
-  position: absolute;
+  position: fixed;
   width: 100%;
   height: 100%;
   top: 0;
   left: 0;
   z-index: 1;
+}
+
+/* Blog navigation link */
+.blog-link {
+  position: fixed;
+  top: 30px;
+  right: 30px;
+  z-index: 10;
+}
+
+.blog-nav-link {
+  font-family: 'Ubuntu Mono', monospace;
+  font-size: 1.1rem;
+  color: #eee;
+  text-decoration: none;
+  padding: 10px 20px;
+  border: 1px solid #eee;
+  border-radius: 5px;
+  transition: all 0.3s ease;
+  background-color: rgba(17, 17, 17, 0.8);
+  backdrop-filter: blur(10px);
+}
+
+.blog-nav-link:hover {
+  color: #fc7a00;
+  border-color: #fc7a00;
+  background-color: rgba(252, 122, 0, 0.1);
+  text-decoration: none;
+}
+
+.blog-nav-link:focus {
+  outline: none;
+  color: #fc7a00;
+  border-color: #fc7a00;
+}
+
+/* Back to blog list link */
+.back-link {
+  position: fixed;
+  top: 30px;
+  right: 140px; /* Position to the left of the home button */
+  z-index: 10;
+  display: none; /* Hidden by default, shown when viewing a post */
+}
+
+.back-nav-link {
+  font-family: 'Ubuntu Mono', monospace;
+  font-size: 1.1rem;
+  color: #eee;
+  text-decoration: none;
+  padding: 10px 20px;
+  border: 1px solid #eee;
+  border-radius: 5px;
+  transition: all 0.3s ease;
+  background-color: rgba(17, 17, 17, 0.8);
+  backdrop-filter: blur(10px);
+}
+
+.back-nav-link:hover {
+  color: #fc7a00;
+  border-color: #fc7a00;
+  background-color: rgba(252, 122, 0, 0.1);
+  text-decoration: none;
+}
+
+.back-nav-link:focus {
+  outline: none;
+  color: #fc7a00;
+  border-color: #fc7a00;
+}
+
+/* Home navigation link */
+.home-link {
+  position: fixed;
+  top: 30px;
+  right: 30px;
+  z-index: 10;
+}
+
+.home-nav-link {
+  font-family: 'Ubuntu Mono', monospace;
+  font-size: 1.1rem;
+  color: #eee;
+  text-decoration: none;
+  padding: 10px 20px;
+  border: 1px solid #eee;
+  border-radius: 5px;
+  transition: all 0.3s ease;
+  background-color: rgba(17, 17, 17, 0.8);
+  backdrop-filter: blur(10px);
+}
+
+.home-nav-link:hover {
+  color: #fc7a00;
+  border-color: #fc7a00;
+  background-color: rgba(252, 122, 0, 0.1);
+  text-decoration: none;
+}
+
+.home-nav-link:focus {
+  outline: none;
+  color: #fc7a00;
+  border-color: #fc7a00;
+}
+
+/* Blog page content */
+.blog-content {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 120px 20px 40px;
+}
+
+.blog-title {
+  font-family: 'Ubuntu Mono', monospace;
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  color: #eee;
+  text-align: center;
+}
+
+.blog-subtitle {
+  font-family: 'Ubuntu Mono', monospace;
+  font-size: clamp(1rem, 1.5vw, 1.3rem);
+  color: #ccc;
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.blog-posts {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.blog-post {
+  background-color: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  padding: 2rem;
+  transition: all 0.3s ease;
+}
+
+.blog-post:hover {
+  background-color: rgba(255, 255, 255, 0.08);
+  border-color: rgba(252, 122, 0, 0.3);
+  transform: translateY(-2px);
+}
+
+.post-title {
+  font-family: 'Ubuntu Mono', monospace;
+  font-size: clamp(1.3rem, 2.5vw, 1.8rem);
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.post-link {
+  color: #eee;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.post-link:hover {
+  color: #fc7a00;
+  text-decoration: none;
+}
+
+.post-meta {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+  color: #999;
+}
+
+.post-date, .post-category {
+  font-family: 'Ubuntu Mono', monospace;
+}
+
+.post-category {
+  background-color: rgba(252, 122, 0, 0.2);
+  color: #fc7a00;
+  padding: 2px 8px;
+  border-radius: 3px;
+  font-size: 0.8rem;
+}
+
+.post-excerpt {
+  font-family: 'Ubuntu Mono', monospace;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #ccc;
+  margin: 0;
+}
+
+/* Blog post full view styling */
+.blog-post-full {
+  background-color: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+}
+
+.post-header {
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.post-title-full {
+  font-family: 'Ubuntu Mono', monospace;
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 700;
+  color: #eee;
+  margin-bottom: 1rem;
+}
+
+.post-meta-full {
+  display: flex;
+  gap: 1rem;
+  font-size: 1rem;
+  color: #999;
+}
+
+.post-content {
+  font-family: 'Ubuntu Mono', monospace;
+  font-size: 1rem;
+  line-height: 1.7;
+  color: #ccc;
+}
+
+.post-content h1,
+.post-content h2,
+.post-content h3 {
+  font-family: 'Ubuntu Mono', monospace;
+  color: #eee;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
+
+.post-content h1 {
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+
+.post-content h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.post-content h3 {
+  font-size: 1.3rem;
+  font-weight: 700;
+}
+
+.post-content p {
+  margin-bottom: 1rem;
+}
+
+.post-content ul,
+.post-content ol {
+  margin-bottom: 1rem;
+  padding-left: 2rem;
+}
+
+.post-content li {
+  margin-bottom: 0.5rem;
+}
+
+.post-content code {
+  background-color: rgba(252, 122, 0, 0.1);
+  color: #fc7a00;
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-size: 0.9rem;
+}
+
+.post-content pre {
+  background-color: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 5px;
+  padding: 1rem;
+  margin: 1rem 0;
+  overflow-x: auto;
+}
+
+.post-content pre code {
+  background-color: transparent;
+  color: #ccc;
+  padding: 0;
+}
+
+.post-content strong {
+  color: #eee;
+  font-weight: 700;
+}
+
+.post-content em {
+  color: #ddd;
+  font-style: italic;
+}
+
+.post-content blockquote {
+  border-left: 3px solid #fc7a00;
+  padding-left: 1rem;
+  margin: 1rem 0;
+  color: #bbb;
+  font-style: italic;
+}
+
+.error-message {
+  text-align: center;
+  padding: 2rem;
+  color: #ff6b6b;
+}
+
+.error-message h3 {
+  color: #ff6b6b;
+  margin-bottom: 1rem;
 }
 
 /* Main content container */
@@ -127,6 +447,41 @@ canvas {
   
   .col-md-5 {
     margin-bottom: 2rem;
+  }
+  
+  /* Blog responsive adjustments */
+  .blog-link, .back-link, .home-link {
+    top: 20px;
+  }
+  
+  .blog-link {
+    right: 20px;
+  }
+  
+  .back-link {
+    right: 100px; /* Position to the left of home button on mobile */
+  }
+  
+  .home-link {
+    right: 20px;
+  }
+  
+  .blog-nav-link, .back-nav-link, .home-nav-link {
+    font-size: 1rem;
+    padding: 8px 16px;
+  }
+  
+  .blog-content {
+    padding: 100px 15px 30px;
+  }
+  
+  .blog-post {
+    padding: 1.5rem;
+  }
+  
+  .post-meta {
+    flex-direction: column;
+    gap: 0.5rem;
   }
 }
 
