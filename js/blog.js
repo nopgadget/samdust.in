@@ -107,6 +107,35 @@ class BlogSystem {
                 this.showBlogList();
             });
         }
+
+        // Handle search functionality
+        const searchInput = document.getElementById('searchInput');
+        const searchButton = document.getElementById('searchButton');
+        
+        if (searchInput) {
+            // Search on input change (debounced)
+            let searchTimeout;
+            searchInput.addEventListener('input', (e) => {
+                clearTimeout(searchTimeout);
+                searchTimeout = setTimeout(() => {
+                    this.performSearch(e.target.value);
+                }, 300);
+            });
+
+            // Search on Enter key
+            searchInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    this.performSearch(e.target.value);
+                }
+            });
+        }
+
+        if (searchButton) {
+            searchButton.addEventListener('click', () => {
+                const searchValue = searchInput ? searchInput.value : '';
+                this.performSearch(searchValue);
+            });
+        }
     }
 
     // Render the blog list
@@ -281,6 +310,131 @@ class BlogSystem {
             this.loadBlogPost(event.state.postId);
         } else {
             this.showBlogList();
+        }
+    }
+
+    // Perform search through blog posts
+    async performSearch(query) {
+        if (!query.trim()) {
+            this.renderBlogList();
+            this.updateSearchResultsInfo('');
+            return;
+        }
+
+        const searchResults = [];
+        const searchTerm = query.toLowerCase();
+
+        // Search through all blog posts
+        for (const post of this.blogPosts) {
+            let matchScore = 0;
+            let matchedContent = [];
+
+            // Search in title
+            if (post.title.toLowerCase().includes(searchTerm)) {
+                matchScore += 10;
+                matchedContent.push('title');
+            }
+
+            // Search in excerpt
+            if (post.excerpt.toLowerCase().includes(searchTerm)) {
+                matchScore += 5;
+                matchedContent.push('excerpt');
+            }
+
+            // Search in category
+            if (post.category.toLowerCase().includes(searchTerm)) {
+                matchScore += 3;
+                matchedContent.push('category');
+            }
+
+            // Search in content (if available)
+            try {
+                const response = await fetch(`blog/${post.filename}`);
+                if (response.ok) {
+                    const content = await response.text();
+                    if (content.toLowerCase().includes(searchTerm)) {
+                        matchScore += 2;
+                        matchedContent.push('content');
+                    }
+                }
+            } catch (error) {
+                console.warn('Could not search content for:', post.title);
+            }
+
+            if (matchScore > 0) {
+                searchResults.push({
+                    ...post,
+                    matchScore,
+                    matchedContent,
+                    highlightedTitle: this.highlightSearchTerm(post.title, searchTerm),
+                    highlightedExcerpt: this.highlightSearchTerm(post.excerpt, searchTerm)
+                });
+            }
+        }
+
+        // Sort by match score (highest first)
+        searchResults.sort((a, b) => b.matchScore - a.matchScore);
+
+        this.renderSearchResults(searchResults, query);
+        this.updateSearchResultsInfo(searchResults.length, query);
+    }
+
+    // Highlight search terms in text
+    highlightSearchTerm(text, searchTerm) {
+        const regex = new RegExp(`(${searchTerm})`, 'gi');
+        return text.replace(regex, '<span class="search-highlight">$1</span>');
+    }
+
+    // Render search results
+    renderSearchResults(results, query) {
+        const blogPostsContainer = document.querySelector('.blog-posts');
+        if (!blogPostsContainer) return;
+
+        if (results.length === 0) {
+            blogPostsContainer.innerHTML = `
+                <div class="no-results">
+                    <p>No blog posts found matching "${query}"</p>
+                    <p>Try different keywords or check your spelling.</p>
+                </div>
+            `;
+            return;
+        }
+
+        blogPostsContainer.innerHTML = results.map(post => `
+            <article class="blog-post">
+                <h2 class="post-title">
+                    <a href="#" class="post-link" data-post-id="${post.id}">${post.highlightedTitle}</a>
+                </h2>
+                <div class="post-meta">
+                    <span class="post-date">${post.date}</span>
+                    <span class="post-category">${post.category}</span>
+                </div>
+                <p class="post-excerpt">
+                    ${post.highlightedExcerpt}
+                </p>
+                <div class="search-match-info">
+                    <small>Matched in: ${post.matchedContent.join(', ')}</small>
+                </div>
+            </article>
+        `).join('');
+    }
+
+    // Update search results info
+    updateSearchResultsInfo(resultCount, query = '') {
+        const searchResultsInfo = document.getElementById('searchResultsInfo');
+        if (!searchResultsInfo) return;
+
+        if (!query) {
+            searchResultsInfo.innerHTML = '';
+            return;
+        }
+
+        if (resultCount === 0) {
+            searchResultsInfo.innerHTML = `No results found for "${query}"`;
+        } else if (resultCount === 1) {
+            searchResultsInfo.innerHTML = `1 result found for "${query}"`;
+        } else {
+            searchResultsInfo.innerHTML = `${resultCount} results found for "${query}"`;
         }
     }
 }

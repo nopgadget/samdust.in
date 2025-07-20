@@ -63,6 +63,91 @@ canvas {
   border-color: #fc7a00;
 }
 
+/* Search Container */
+.search-container {
+  margin-bottom: 2rem;
+  z-index: 5;
+  position: relative;
+}
+
+.search-box {
+  display: flex;
+  align-items: center;
+  max-width: 500px;
+  margin: 0 auto;
+  background-color: rgba(17, 17, 17, 0.8);
+  border: 1px solid #eee;
+  border-radius: 25px;
+  padding: 5px;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+
+.search-box:focus-within {
+  border-color: #fc7a00;
+  box-shadow: 0 0 10px rgba(252, 122, 0, 0.3);
+}
+
+.search-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: #eee;
+  font-family: 'Ubuntu Mono', monospace;
+  font-size: 1rem;
+  padding: 10px 15px;
+  outline: none;
+}
+
+.search-input::placeholder {
+  color: #888;
+}
+
+.search-button {
+  background: transparent;
+  border: none;
+  color: #eee;
+  padding: 10px 15px;
+  cursor: pointer;
+  border-radius: 20px;
+  transition: all 0.3s ease;
+}
+
+.search-button:hover {
+  color: #fc7a00;
+  background-color: rgba(252, 122, 0, 0.1);
+}
+
+.search-results-info {
+  text-align: center;
+  margin-top: 1rem;
+  color: #888;
+  font-size: 0.9rem;
+}
+
+.search-highlight {
+  background-color: rgba(252, 122, 0, 0.3);
+  padding: 2px 4px;
+  border-radius: 3px;
+}
+
+.no-results {
+  text-align: center;
+  color: #888;
+  font-style: italic;
+  margin-top: 2rem;
+}
+
+.search-match-info {
+  margin-top: 0.5rem;
+  font-size: 0.8rem;
+  color: #666;
+}
+
+.search-match-info small {
+  color: #888;
+}
+
 /* Back to blog list link */
 .back-link {
   position: fixed;
@@ -534,6 +619,11 @@ canvas {
     padding: 100px 15px 30px;
     margin: 0 10px;
     max-width: calc(100% - 20px);
+  }
+  
+  .search-box {
+    max-width: 100%;
+    margin: 0 1rem;
   }
   
   .blog-post {
