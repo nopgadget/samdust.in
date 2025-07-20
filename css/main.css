@@ -1,83 +1,196 @@
+/* Reset and base styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
+body {
+  font-family: 'Ubuntu Mono', monospace;
+  background-color: #111;
+  color: #eee;
+  overflow-x: hidden;
+}
+
+/* Particles.js canvas */
 canvas {
-    display: block;
-    background-color: #111;
-  }
-  
-  #particles-js {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-  }
-  
+  display: block;
+  background-color: #111;
+}
+
+#particles-js {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+
+/* Main content container */
+.container {
+  position: relative;
+  z-index: 2;
+  min-height: 100vh;
+}
+
+.center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  max-width: 1200px;
+}
+
+/* Typography */
+.header1 {
+  font-family: 'Ubuntu Mono', monospace;
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  color: #eee;
+}
+
+.header2 {
+  font-family: 'Ubuntu Mono', monospace;
+  font-size: clamp(0.9rem, 1.4vw, 1.2rem);
+  margin-bottom: 0.25rem;
+  color: #ccc;
+  font-weight: 400;
+}
+
+.header3 {
+  font-family: 'Ubuntu Mono', monospace;
+  font-size: clamp(1.2rem, 2.2vw, 1.8rem);
+  color: #eee;
+}
+
+/* Social links */
+.link1 {
+  font-family: 'Ubuntu Mono', monospace;
+  font-size: clamp(1.5rem, 2.8vw, 2.2rem);
+  color: #eee;
+  margin: 0 10px;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.link1:hover {
+  color: #fc7a00;
+  transform: translateY(-2px);
+  text-decoration: none;
+}
+
+.link1:focus {
+  outline: none;
+  color: #fc7a00;
+}
+
+/* Image styling */
+.img-fluid {
+  border-radius: 10px;
+  transition: transform 0.3s ease;
+}
+
+.img-fluid:hover {
+  transform: scale(1.02);
+}
+
+/* Responsive design */
+@media screen and (max-width: 768px) {
   .center {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    padding: 0 20px;
   }
   
   .header1 {
-    font-family: 'Ubuntu Mono', monospace;
-    font-size: 5vw;
+    font-size: clamp(2rem, 8vw, 3rem);
   }
   
   .header2 {
-    font-family: 'Ubuntu Mono', monospace;
-    font-size: 1.4vw;
-  }
-  
-  .header3 {
-    font-family: 'Ubuntu Mono', monospace;
-    font-size: 2.2vw;
+    font-size: clamp(0.8rem, 2.5vw, 1rem);
   }
   
   .link1 {
-    font-family: 'Ubuntu Mono', monospace;
-    font-size: 2.8vw;
-    color: inherit;
-    margin: 0px 5px 0px 5px;
-    transition: 0.5s;
+    font-size: clamp(1.8rem, 5vw, 2.5rem);
+    margin: 0 8px;
   }
+  
+  body {
+    text-align: center;
+  }
+  
+  .row {
+    flex-direction: column;
+  }
+  
+  .col-md-5 {
+    margin-bottom: 2rem;
+  }
+}
 
-  p {
-    color: #eee
+@media screen and (max-width: 576px) {
+  .header1 {
+    font-size: clamp(1.8rem, 9vw, 2.5rem);
+  }
+  
+  .header2 {
+    font-size: clamp(0.7rem, 2.5vw, 0.9rem);
   }
   
   .link1 {
-    color: #eee
+    font-size: clamp(1.5rem, 5vw, 2rem);
+    margin: 0 6px;
   }
-  .link1:hover {
-    color: #fc7a00;
+}
+
+@media screen and (min-width: 1400px) {
+  .header2 {
+    font-size: clamp(0.8rem, 1.1vw, 1rem);
   }
-  
-  @media screen and (max-width: 785px) {
-    .header1 {
-      font-size: 8vw;
-    }
-    .link1 {
-      font-size: 4vw;
-    }
+}
+
+/* Animation for page load */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -40%);
   }
-  
-  @media screen and (max-width: 765px) {
-    body {
-      text-align: center;
-    }
-    .header1 {
-      font-size: 9vw;
-    }
-    .header2 {
-      font-size: 2.5vw;
-    }
-    .link1 {
-      font-size: 5vw;
-    }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%);
   }
-  
-  @media screen and (min-width: 1390px) {
-    .header2 {
-      font-size: 1.1vw;
-    }
-  }
+}
+
+.center {
+  animation: fadeInUp 0.8s ease-out;
+}
+
+/* Tooltip customization */
+.tooltip {
+  font-family: 'Ubuntu Mono', monospace;
+}
+
+.tooltip-inner {
+  background-color: #333;
+  color: #eee;
+  border: 1px solid #555;
+}
+
+.bs-tooltip-top .tooltip-arrow::before {
+  border-top-color: #333;
+}
+
+.bs-tooltip-bottom .tooltip-arrow::before {
+  border-bottom-color: #333;
+}
+
+.bs-tooltip-start .tooltip-arrow::before {
+  border-left-color: #333;
+}
+
+.bs-tooltip-end .tooltip-arrow::before {
+  border-right-color: #333;
+}
   
