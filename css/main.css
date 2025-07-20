@@ -10,6 +10,8 @@ body {
   background-color: #111;
   color: #eee;
   overflow-x: hidden;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 /* Particles.js canvas */
@@ -135,6 +137,12 @@ canvas {
   max-width: 800px;
   margin: 0 auto;
   padding: 120px 20px 40px;
+  background-color: rgba(17, 17, 17, 0.3);
+  border-radius: 15px;
+  backdrop-filter: blur(10px);
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  hyphens: auto;
 }
 
 .blog-title {
@@ -161,16 +169,17 @@ canvas {
 }
 
 .blog-post {
-  background-color: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background-color: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 10px;
   padding: 2rem;
   transition: all 0.3s ease;
+  backdrop-filter: blur(5px);
 }
 
 .blog-post:hover {
-  background-color: rgba(255, 255, 255, 0.08);
-  border-color: rgba(252, 122, 0, 0.3);
+  background-color: rgba(255, 255, 255, 0.2);
+  border-color: rgba(252, 122, 0, 0.4);
   transform: translateY(-2px);
 }
 
@@ -218,15 +227,19 @@ canvas {
   line-height: 1.6;
   color: #ccc;
   margin: 0;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  max-width: 100%;
 }
 
 /* Blog post full view styling */
 .blog-post-full {
-  background-color: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background-color: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 10px;
   padding: 2rem;
   margin-bottom: 2rem;
+  backdrop-filter: blur(5px);
 }
 
 .post-header {
@@ -255,6 +268,11 @@ canvas {
   font-size: 1rem;
   line-height: 1.7;
   color: #ccc;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  hyphens: auto;
+  max-width: 100%;
+  overflow-x: hidden;
 }
 
 .post-content h1,
@@ -283,6 +301,9 @@ canvas {
 
 .post-content p {
   margin-bottom: 1rem;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  max-width: 100%;
 }
 
 .post-content ul,
@@ -301,6 +322,9 @@ canvas {
   padding: 2px 6px;
   border-radius: 3px;
   font-size: 0.9rem;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  max-width: 100%;
 }
 
 .post-content pre {
@@ -310,6 +334,9 @@ canvas {
   padding: 1rem;
   margin: 1rem 0;
   overflow-x: auto;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  max-width: 100%;
 }
 
 .post-content pre code {
@@ -352,6 +379,10 @@ canvas {
   position: relative;
   z-index: 2;
   min-height: 100vh;
+  max-width: 100%;
+  overflow-x: hidden;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 .center {
@@ -498,6 +529,8 @@ canvas {
   
   .blog-content {
     padding: 100px 15px 30px;
+    margin: 0 10px;
+    max-width: calc(100% - 20px);
   }
   
   .blog-post {
@@ -522,6 +555,20 @@ canvas {
   .link1 {
     font-size: clamp(1.5rem, 5vw, 2rem);
     margin: 0 6px;
+  }
+  
+  .blog-content {
+    padding: 80px 10px 20px;
+    margin: 0 5px;
+    max-width: calc(100% - 10px);
+  }
+  
+  .blog-post {
+    padding: 1rem;
+  }
+  
+  .blog-post-full {
+    padding: 1rem;
   }
 }
 
