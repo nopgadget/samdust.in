@@ -19,6 +19,22 @@ class BlogSystem {
             // For now, we'll use the sample posts we created
             this.blogPosts = [
                 {
+                    id: 'paloalto-firewall-hardening',
+                    title: 'Palo Alto Firewall Hardening',
+                    date: 'February 1, 2025',
+                    category: 'Blue Team',
+                    excerpt: 'Comprehensive guide to hardening Palo Alto firewalls including PanOS updates, configuration management, service hardening, syslog forwarding to Splunk, and security best practices...',
+                    filename: 'PaloAlto Firewall Hardening.md'
+                },
+                {
+                    id: 'windows-hardening',
+                    title: 'Windows Hardening',
+                    date: 'January 31, 2025',
+                    category: 'Blue Team',
+                    excerpt: 'Comprehensive Windows hardening guide covering tooling distribution, manual enumeration techniques, PowerShell security configurations, firewall management, and automated hardening scripts...',
+                    filename: 'Windows Hardening.md'
+                },
+                {
                     id: 'thm-reset',
                     title: 'THM Reset',
                     date: 'January 1, 2025',
