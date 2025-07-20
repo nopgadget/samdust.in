@@ -28,26 +28,32 @@
       <a href="#" class="back-nav-link"><i class="fas fa-arrow-left"></i> Back</a>
     </div>
     
-    <!-- Home link in top right -->
-    <div class="home-link">
+    <!-- Navigation links in top right -->
+    <div class="nav-links">
+      <!-- Search button -->
+      <button class="search-nav-button" id="searchToggle">
+        <i class="fas fa-search"></i>
+      </button>
+      
+      <!-- Home link -->
       <a href="index.html" class="home-nav-link">Home</a>
+    </div>
+    
+    <!-- Expandable search container -->
+    <div class="search-expandable" id="searchExpandable">
+      <div class="search-box">
+        <input type="text" id="searchInput" class="search-input" placeholder="Search blog posts..." />
+        <button type="button" id="searchButton" class="search-button">
+          <i class="fas fa-search"></i>
+        </button>
+      </div>
+      <div class="search-results-info" id="searchResultsInfo"></div>
     </div>
     
     <div class="container">
       <div class="blog-content">
         <h1 class="blog-title">Blog</h1>
         <p class="blog-subtitle">Infodumps, writeups, and random interesting hacks</p>
-        
-        <!-- Search Bar -->
-        <div class="search-container">
-          <div class="search-box">
-            <input type="text" id="searchInput" class="search-input" placeholder="Search blog posts..." />
-            <button type="button" id="searchButton" class="search-button">
-              <i class="fas fa-search"></i>
-            </button>
-          </div>
-          <div class="search-results-info" id="searchResultsInfo"></div>
-        </div>
         
         <div class="blog-posts">
           <!-- Blog posts will be loaded dynamically -->

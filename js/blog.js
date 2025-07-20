@@ -110,6 +110,37 @@ class BlogSystem {
             });
         }
 
+        // Handle search toggle
+        const searchToggle = document.getElementById('searchToggle');
+        const searchExpandable = document.getElementById('searchExpandable');
+        
+        if (searchToggle && searchExpandable) {
+            searchToggle.addEventListener('click', () => {
+                searchExpandable.classList.toggle('active');
+                if (searchExpandable.classList.contains('active')) {
+                    // Focus the search input when expanded
+                    const searchInput = document.getElementById('searchInput');
+                    if (searchInput) {
+                        setTimeout(() => searchInput.focus(), 100);
+                    }
+                }
+            });
+
+            // Close search when clicking outside
+            document.addEventListener('click', (e) => {
+                if (!searchExpandable.contains(e.target) && !searchToggle.contains(e.target)) {
+                    searchExpandable.classList.remove('active');
+                }
+            });
+
+            // Close search on Escape key
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && searchExpandable.classList.contains('active')) {
+                    searchExpandable.classList.remove('active');
+                }
+            });
+        }
+
         // Handle search functionality
         const searchInput = document.getElementById('searchInput');
         const searchButton = document.getElementById('searchButton');
@@ -255,14 +286,14 @@ class BlogSystem {
             </article>
         `;
 
-        // Show back button and update home button
+        // Show back button and update nav links
         const backLink = document.querySelector('.back-link');
-        const homeLink = document.querySelector('.home-link');
+        const navLinks = document.querySelector('.nav-links');
         if (backLink) {
             backLink.style.display = 'block';
         }
-        if (homeLink) {
-            homeLink.style.display = 'block';
+        if (navLinks) {
+            navLinks.style.display = 'flex';
         }
     }
 
@@ -292,14 +323,20 @@ class BlogSystem {
             </div>
         `;
 
-        // Hide back button, show home button
+        // Hide back button, show nav links
         const backLink = document.querySelector('.back-link');
-        const homeLink = document.querySelector('.home-link');
+        const navLinks = document.querySelector('.nav-links');
         if (backLink) {
             backLink.style.display = 'none';
         }
-        if (homeLink) {
-            homeLink.style.display = 'block';
+        if (navLinks) {
+            navLinks.style.display = 'flex';
+        }
+
+        // Hide search expandable
+        const searchExpandable = document.getElementById('searchExpandable');
+        if (searchExpandable) {
+            searchExpandable.classList.remove('active');
         }
 
         // Update URL

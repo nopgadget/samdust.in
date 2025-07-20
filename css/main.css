@@ -63,18 +63,79 @@ canvas {
   border-color: #fc7a00;
 }
 
-/* Search Container */
-.search-container {
-  margin-bottom: 2rem;
-  z-index: 5;
-  position: relative;
+/* Navigation links container */
+.nav-links {
+  position: fixed;
+  top: 30px;
+  right: 30px;
+  z-index: 10;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+/* Search navigation button */
+.search-nav-button {
+  font-family: 'Ubuntu Mono', monospace;
+  font-size: 1.1rem;
+  color: #eee;
+  background: transparent;
+  border: 1px solid #eee;
+  border-radius: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background-color: rgba(17, 17, 17, 0.8);
+  backdrop-filter: blur(10px);
+}
+
+.search-nav-button:hover {
+  color: #fc7a00;
+  border-color: #fc7a00;
+  background-color: rgba(252, 122, 0, 0.1);
+}
+
+.search-nav-button:focus {
+  outline: none;
+  color: #fc7a00;
+  border-color: #fc7a00;
+}
+
+.search-nav-button:focus-visible {
+  outline: none;
+  color: #fc7a00;
+  border-color: #fc7a00;
+}
+
+/* Expandable search container */
+.search-expandable {
+  position: fixed;
+  top: 30px;
+  right: 30px;
+  z-index: 15;
+  background-color: rgba(17, 17, 17, 0.95);
+  border: 1px solid #eee;
+  border-radius: 10px;
+  padding: 20px;
+  backdrop-filter: blur(15px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  transform: translateY(-100px) scale(0.8);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  min-width: 300px;
+  max-width: 500px;
+}
+
+.search-expandable.active {
+  transform: translateY(0) scale(1);
+  opacity: 1;
+  visibility: visible;
 }
 
 .search-box {
   display: flex;
   align-items: center;
-  max-width: 500px;
-  margin: 0 auto;
   background-color: rgba(17, 17, 17, 0.8);
   border: 1px solid #eee;
   border-radius: 25px;
@@ -184,13 +245,6 @@ canvas {
 }
 
 /* Home navigation link */
-.home-link {
-  position: fixed;
-  top: 30px;
-  right: 30px;
-  z-index: 10;
-}
-
 .home-nav-link {
   font-family: 'Ubuntu Mono', monospace;
   font-size: 1.1rem;
@@ -594,7 +648,7 @@ canvas {
   }
   
   /* Blog responsive adjustments */
-  .blog-link, .back-link, .home-link {
+  .blog-link, .back-link, .nav-links {
     top: 20px;
   }
   
@@ -603,16 +657,24 @@ canvas {
   }
   
   .back-link {
-    right: 100px; /* Position to the left of home button on mobile */
+    right: 120px; /* Position to the left of nav buttons on mobile */
   }
   
-  .home-link {
+  .nav-links {
     right: 20px;
+    gap: 8px;
   }
   
-  .blog-nav-link, .back-nav-link, .home-nav-link {
+  .blog-nav-link, .back-nav-link, .home-nav-link, .search-nav-button {
     font-size: 1rem;
     padding: 8px 16px;
+  }
+  
+  .search-expandable {
+    top: 20px;
+    right: 20px;
+    min-width: 280px;
+    max-width: calc(100vw - 40px);
   }
   
   .blog-content {
