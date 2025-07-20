@@ -3,6 +3,8 @@ class BlogSystem {
     constructor() {
         this.blogPosts = [];
         this.currentPost = null;
+        this.lastSearchTime = 0;
+        this.searchCooldown = 500; // 500ms cooldown between searches
     }
 
     // Initialize the blog system
@@ -315,14 +317,31 @@ class BlogSystem {
 
     // Perform search through blog posts
     async performSearch(query) {
-        if (!query.trim()) {
+        // Rate limiting
+        const now = Date.now();
+        if (now - this.lastSearchTime < this.searchCooldown) {
+            return; // Skip search if too soon
+        }
+        this.lastSearchTime = now;
+
+        // Input validation and sanitization
+        if (!query || typeof query !== 'string') {
+            this.renderBlogList();
+            this.updateSearchResultsInfo('');
+            return;
+        }
+
+        // Sanitize and limit query length
+        const sanitizedQuery = query.trim().substring(0, 100); // Limit to 100 characters
+        
+        if (!sanitizedQuery) {
             this.renderBlogList();
             this.updateSearchResultsInfo('');
             return;
         }
 
         const searchResults = [];
-        const searchTerm = query.toLowerCase();
+        const searchTerm = sanitizedQuery.toLowerCase();
 
         // Search through all blog posts
         for (const post of this.blogPosts) {
@@ -375,13 +394,15 @@ class BlogSystem {
         // Sort by match score (highest first)
         searchResults.sort((a, b) => b.matchScore - a.matchScore);
 
-        this.renderSearchResults(searchResults, query);
-        this.updateSearchResultsInfo(searchResults.length, query);
+        this.renderSearchResults(searchResults, sanitizedQuery);
+        this.updateSearchResultsInfo(searchResults.length, sanitizedQuery);
     }
 
     // Highlight search terms in text
     highlightSearchTerm(text, searchTerm) {
-        const regex = new RegExp(`(${searchTerm})`, 'gi');
+        // Escape special RegExp characters to prevent RegExp injection
+        const escapedSearchTerm = searchTerm.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        const regex = new RegExp(`(${escapedSearchTerm})`, 'gi');
         return text.replace(regex, '<span class="search-highlight">$1</span>');
     }
 
@@ -393,7 +414,7 @@ class BlogSystem {
         if (results.length === 0) {
             blogPostsContainer.innerHTML = `
                 <div class="no-results">
-                    <p>No blog posts found matching "${query}"</p>
+                    <p>No blog posts found matching "${this.escapeHtml(query)}"</p>
                     <p>Try different keywords or check your spelling.</p>
                 </div>
             `;
@@ -403,17 +424,17 @@ class BlogSystem {
         blogPostsContainer.innerHTML = results.map(post => `
             <article class="blog-post">
                 <h2 class="post-title">
-                    <a href="#" class="post-link" data-post-id="${post.id}">${post.highlightedTitle}</a>
+                    <a href="#" class="post-link" data-post-id="${this.escapeHtml(post.id)}">${post.highlightedTitle}</a>
                 </h2>
                 <div class="post-meta">
-                    <span class="post-date">${post.date}</span>
-                    <span class="post-category">${post.category}</span>
+                    <span class="post-date">${this.escapeHtml(post.date)}</span>
+                    <span class="post-category">${this.escapeHtml(post.category)}</span>
                 </div>
                 <p class="post-excerpt">
                     ${post.highlightedExcerpt}
                 </p>
                 <div class="search-match-info">
-                    <small>Matched in: ${post.matchedContent.join(', ')}</small>
+                    <small>Matched in: ${this.escapeHtml(post.matchedContent.join(', '))}</small>
                 </div>
             </article>
         `).join('');
@@ -430,12 +451,19 @@ class BlogSystem {
         }
 
         if (resultCount === 0) {
-            searchResultsInfo.innerHTML = `No results found for "${query}"`;
+            searchResultsInfo.innerHTML = `No results found for "${this.escapeHtml(query)}"`;
         } else if (resultCount === 1) {
-            searchResultsInfo.innerHTML = `1 result found for "${query}"`;
+            searchResultsInfo.innerHTML = `1 result found for "${this.escapeHtml(query)}"`;
         } else {
-            searchResultsInfo.innerHTML = `${resultCount} results found for "${query}"`;
+            searchResultsInfo.innerHTML = `${resultCount} results found for "${this.escapeHtml(query)}"`;
         }
+    }
+
+    // Escape HTML to prevent XSS
+    escapeHtml(text) {
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
     }
 }
 
