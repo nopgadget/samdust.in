@@ -305,18 +305,10 @@ if __name__ == "__main__":
 - No context switching between tools
 - Real-time analysis and decision making
 
-## Why This Approach Works
-
-1. **No stack canaries** - We can overwrite the return address without detection
-2. **PIE disabled** - The win function address is fixed and predictable
-3. **Simple target** - We don't need to chain ROP gadgets or find system calls
-4. **Direct path** - One function call gets us the flag
-
 ## Lessons Learned
 
-1. **Modern CTF patterns**: Many challenges include "win" functions rather than requiring complex ROP chains
-2. **Tool integration value**: Having AI directly control reverse engineering tools significantly speeds up analysis
-3. **Systematic approach**: Even with AI assistance, following a methodical process (protections → vulnerability → targets → exploitation) is crucial
+1. **Tool integration value**: Having AI directly control reverse engineering tools significantly speeds up analysis
+2. **Systematic approach**: Even with AI assistance, following a methodical process (protections → vulnerability → targets → exploitation) is crucial
 
 ## The Future of Offensive Security
 
