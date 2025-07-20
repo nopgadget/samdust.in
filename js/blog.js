@@ -49,6 +49,14 @@ class BlogSystem {
                     category: 'Active Directory',
                     excerpt: 'Techniques and tools for enumerating Active Directory environments, including MMC snap-ins, PowerShell cmdlets, and SharpHound for comprehensive AD reconnaissance...',
                     filename: 'Enumerating Active Directory.md'
+                },
+                {
+                    id: 'cracking-veracrypt-volumes',
+                    title: 'Cracking VeraCrypt Volumes with Hashcat',
+                    date: 'July 19, 2023',
+                    category: 'Cryptography',
+                    excerpt: 'Comprehensive guide to cracking VeraCrypt volumes using Hashcat, covering volume header extraction, attack modes, performance optimization, and ethical considerations...',
+                    filename: 'Cracking VeraCrypt Volumes with Hashcat.md'
                 }
             ];
         } catch (error) {
@@ -135,42 +143,20 @@ class BlogSystem {
         }
     }
 
-    // Convert markdown to HTML (simplified version)
+    // Convert markdown to HTML using marked.js
     markdownToHtml(markdown) {
-        let html = markdown;
+        // Configure marked.js options
+        marked.setOptions({
+            breaks: true, // Convert line breaks to <br>
+            gfm: true,    // GitHub Flavored Markdown
+            headerIds: true, // Add IDs to headers for linking
+            mangle: false,   // Don't escape HTML
+            sanitize: false  // Allow HTML in markdown
+        });
 
-        // Convert headers
-        html = html.replace(/^### (.*$)/gim, '<h3>$1</h3>');
-        html = html.replace(/^## (.*$)/gim, '<h2>$1</h2>');
-        html = html.replace(/^# (.*$)/gim, '<h1>$1</h1>');
-
-        // Convert bold and italic
-        html = html.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-        html = html.replace(/\*(.*?)\*/g, '<em>$1</em>');
-
-        // Convert code blocks
-        html = html.replace(/```(\w+)?\n([\s\S]*?)```/g, '<pre><code class="language-$1">$2</code></pre>');
-        html = html.replace(/`([^`]+)`/g, '<code>$1</code>');
-
-        // Convert lists
-        html = html.replace(/^\s*[-*]\s+(.*$)/gim, '<li>$1</li>');
-        html = html.replace(/(<li>.*<\/li>)/s, '<ul>$1</ul>');
-
-        // Convert numbered lists
-        html = html.replace(/^\s*\d+\.\s+(.*$)/gim, '<li>$1</li>');
-        html = html.replace(/(<li>.*<\/li>)/s, '<ol>$1</ol>');
-
-        // Convert paragraphs
-        html = html.replace(/\n\n/g, '</p><p>');
-        html = '<p>' + html + '</p>';
-
-        // Clean up empty paragraphs
-        html = html.replace(/<p><\/p>/g, '');
-        html = html.replace(/<p>(<h[1-6]>.*<\/h[1-6]>)<\/p>/g, '$1');
-        html = html.replace(/<p>(<ul>.*<\/ul>)<\/p>/g, '$1');
-        html = html.replace(/<p>(<ol>.*<\/ol>)<\/p>/g, '$1');
-        html = html.replace(/<p>(<pre>.*<\/pre>)<\/p>/g, '$1');
-
+        // Parse markdown to HTML
+        const html = marked.parse(markdown);
+        
         return html;
     }
 

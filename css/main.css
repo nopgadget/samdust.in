@@ -418,6 +418,31 @@ canvas {
   transform: scale(1.02);
 }
 
+/* Responsive images in blog posts */
+.post-content img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 1.5rem auto;
+  border-radius: 8px;
+  transition: transform 0.3s ease;
+}
+
+.post-content img:hover {
+  /* No hover effect - images stay static */
+}
+
+/* Image captions */
+.post-content img + em {
+  display: block;
+  text-align: center;
+  font-size: 0.9rem;
+  color: #999;
+  margin-top: 0.5rem;
+  margin-bottom: 1.5rem;
+  font-style: italic;
+}
+
 /* Responsive design */
 @media screen and (max-width: 768px) {
   .center {
