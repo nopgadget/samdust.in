@@ -286,14 +286,14 @@ class BlogSystem {
             </article>
         `;
 
-        // Show back button and update nav links
+        // Show back button and hide nav links (home and search) when viewing a post
         const backLink = document.querySelector('.back-link');
         const navLinks = document.querySelector('.nav-links');
         if (backLink) {
             backLink.style.display = 'block';
         }
         if (navLinks) {
-            navLinks.style.display = 'flex';
+            navLinks.style.display = 'none';
         }
     }
 

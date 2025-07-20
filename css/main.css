@@ -657,7 +657,7 @@ canvas {
   }
   
   .back-link {
-    right: 120px; /* Position to the left of nav buttons on mobile */
+    right: 20px; /* Position further right on mobile */
   }
   
   .nav-links {
