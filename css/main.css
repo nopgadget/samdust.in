@@ -137,7 +137,7 @@ canvas {
   max-width: 800px;
   margin: 0 auto;
   padding: 120px 20px 40px;
-  background-color: rgba(17, 17, 17, 0.3);
+  background-color: rgba(17, 17, 17, 0.6);
   border-radius: 15px;
   backdrop-filter: blur(10px);
   word-wrap: break-word;
@@ -169,8 +169,8 @@ canvas {
 }
 
 .blog-post {
-  background-color: rgba(255, 255, 255, 0.15);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  background-color: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
   border-radius: 10px;
   padding: 2rem;
   transition: all 0.3s ease;
@@ -178,7 +178,7 @@ canvas {
 }
 
 .blog-post:hover {
-  background-color: rgba(255, 255, 255, 0.2);
+  background-color: rgba(255, 255, 255, 0.12);
   border-color: rgba(252, 122, 0, 0.4);
   transform: translateY(-2px);
 }
@@ -234,8 +234,8 @@ canvas {
 
 /* Blog post full view styling */
 .blog-post-full {
-  background-color: rgba(255, 255, 255, 0.15);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  background-color: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
   border-radius: 10px;
   padding: 2rem;
   margin-bottom: 2rem;
