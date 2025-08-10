@@ -21,10 +21,20 @@ class BlogSystem {
             // For now, we'll use the sample posts we created
             this.blogPosts = [
                 {
+                    id: 'hiddenstate-dc33-cloud-ctf',
+                    title: 'HiddenState DC33 Cloud CTF',
+                    date: 'August 10, 2025',
+                    category: 'CTF',
+                    topics: ['Cloud', 'GCP', 'Infrastructure', 'Terraform'],
+                    excerpt: 'Cloud security challenge demonstrating infrastructure enumeration, Terraform state file analysis, and Google Cloud Storage bucket exploitation to recover secrets...',
+                    filename: 'HiddenState DC33 Cloud CTF.md'
+                },
+                {
                     id: 'vibepwning-bdsec-ctf-2025',
                     title: 'VibePwning - BDSEC CTF 2025',
                     date: 'June 20, 2025',
                     category: 'CTF',
+                    topics: ['Reverse Engineering', 'AI', 'Buffer Overflow', 'Exploitation'],
                     excerpt: 'Walkthrough demonstrating AI-assisted buffer overflow exploitation using Claude with Ghidra MCP server. Shows how AI integration can dramatically accelerate reverse engineering and exploit development...',
                     filename: 'VibePwning - BDSEC CTF 2025.md'
                 },
@@ -33,6 +43,7 @@ class BlogSystem {
                     title: 'Palo Alto Firewall Hardening',
                     date: 'February 1, 2025',
                     category: 'Blue Team',
+                    topics: ['Network Security', 'Firewall', 'Hardening', 'Palo Alto'],
                     excerpt: 'Comprehensive guide to hardening Palo Alto firewalls including PanOS updates, configuration management, service hardening, syslog forwarding to Splunk, and security best practices...',
                     filename: 'PaloAlto Firewall Hardening.md'
                 },
@@ -41,6 +52,7 @@ class BlogSystem {
                     title: 'Windows Hardening',
                     date: 'January 31, 2025',
                     category: 'Blue Team',
+                    topics: ['Windows', 'Hardening', 'PowerShell', 'Security'],
                     excerpt: 'Comprehensive Windows hardening guide covering tooling distribution, manual enumeration techniques, PowerShell security configurations, firewall management, and automated hardening scripts...',
                     filename: 'Windows Hardening.md'
                 },
@@ -49,6 +61,7 @@ class BlogSystem {
                     title: 'THM Reset',
                     date: 'January 1, 2025',
                     category: 'Writeup',
+                    topics: ['TryHackMe', 'Active Directory', 'SMB', 'Kerberos'],
                     excerpt: 'TryHackMe room walkthrough covering domain enumeration, SMB exploitation, and privilege escalation through password resets and Kerberos attacks...',
                     filename: 'THM Reset.md'
                 },
@@ -57,6 +70,7 @@ class BlogSystem {
                     title: 'Exploiting Active Directory',
                     date: 'December 31, 2024',
                     category: 'Active Directory',
+                    topics: ['Active Directory', 'Kerberos', 'Privilege Escalation', 'Exploitation'],
                     excerpt: 'Advanced Active Directory exploitation techniques including permission delegation, Kerberos delegation attacks, and automated relay methods for privilege escalation...',
                     filename: 'Exploiting Active Directory.md'
                 },
@@ -65,6 +79,7 @@ class BlogSystem {
                     title: 'Lateral Movement',
                     date: 'December 29, 2024',
                     category: 'Red Team',
+                    topics: ['Red Team', 'Lateral Movement', 'Windows', 'PSExec'],
                     excerpt: 'Comprehensive guide to lateral movement techniques including PSExec, WinRM, WMI, scheduled tasks, and alternate authentication methods for network pivoting...',
                     filename: 'Lateral Movement.md'
                 },
@@ -73,6 +88,7 @@ class BlogSystem {
                     title: 'Enumerating Active Directory',
                     date: 'December 27, 2024',
                     category: 'Active Directory',
+                    topics: ['Active Directory', 'Enumeration', 'PowerShell', 'SharpHound'],
                     excerpt: 'Techniques and tools for enumerating Active Directory environments, including MMC snap-ins, PowerShell cmdlets, and SharpHound for comprehensive AD reconnaissance...',
                     filename: 'Enumerating Active Directory.md'
                 },
@@ -81,6 +97,7 @@ class BlogSystem {
                     title: 'Cracking VeraCrypt Volumes with Hashcat',
                     date: 'July 19, 2023',
                     category: 'Cryptography',
+                    topics: ['Cryptography', 'VeraCrypt', 'Hashcat', 'Password Cracking'],
                     excerpt: 'Comprehensive guide to cracking VeraCrypt volumes using Hashcat, covering volume header extraction, attack modes, performance optimization, and ethical considerations...',
                     filename: 'Cracking VeraCrypt Volumes with Hashcat.md'
                 }
@@ -183,7 +200,10 @@ class BlogSystem {
                 </h2>
                 <div class="post-meta">
                     <span class="post-date">${post.date}</span>
-                    <span class="post-category">${post.category}</span>
+                    <div class="category-topics-group">
+                        <span class="post-category">${post.category}</span>
+                        ${post.topics ? `<div class="post-topics">${post.topics.map(topic => `<span class="topic-tag">${topic}</span>`).join('')}</div>` : ''}
+                    </div>
                 </div>
                 <p class="post-excerpt">
                     ${post.excerpt}
@@ -267,6 +287,59 @@ class BlogSystem {
     }
 
     // Render a blog post
+        generateTableOfContents(postId) {
+        const tocContainer = document.getElementById(`toc-${postId}`);
+        if (!tocContainer) return;
+        
+        const tocList = tocContainer.querySelector('.toc-list');
+        const content = document.querySelector('.post-content');
+        const headers = content.querySelectorAll('h1, h2, h3, h4, h5, h6');
+        
+        if (headers.length === 0) {
+            tocContainer.style.display = 'none';
+            return;
+        }
+        
+        headers.forEach((header, index) => {
+            // Generate unique ID for the header if it doesn't have one
+            if (!header.id) {
+                header.id = `header-${postId}-${index}`;
+            }
+            
+            const listItem = document.createElement('li');
+            const link = document.createElement('a');
+            
+            // Determine indentation level based on header level
+            const headerLevel = parseInt(header.tagName.charAt(1));
+            const indentClass = `toc-level-${headerLevel}`;
+            
+            link.href = `#${header.id}`;
+            link.textContent = header.textContent;
+            link.className = `toc-link ${indentClass}`;
+            
+            // Add smooth scrolling
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetHeader = document.getElementById(header.id);
+                if (targetHeader) {
+                    targetHeader.scrollIntoView({ 
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                    
+                    // Add highlight effect
+                    targetHeader.classList.add('toc-highlight');
+                    setTimeout(() => {
+                        targetHeader.classList.remove('toc-highlight');
+                    }, 2000);
+                }
+            });
+            
+            listItem.appendChild(link);
+            tocList.appendChild(listItem);
+        });
+    }
+
     renderBlogPost(post, content) {
         const blogContent = document.querySelector('.blog-content');
         if (!blogContent) return;
@@ -279,12 +352,32 @@ class BlogSystem {
                         <span class="post-date">${post.date}</span>
                         <span class="post-category">${post.category}</span>
                     </div>
+                    ${post.topics ? `<div class="post-topics-full">${post.topics.map(topic => `<span class="topic-tag">${topic}</span>`).join('')}</div>` : ''}
                 </header>
+                <div class="table-of-contents collapsed" id="toc-${post.id}">
+                    <h3>
+                        Table of Contents
+                        <button class="toc-toggle" aria-label="Toggle table of contents"></button>
+                    </h3>
+                    <ul class="toc-list"></ul>
+                </div>
                 <div class="post-content">
                     ${content}
                 </div>
             </article>
         `;
+        
+        // Generate table of contents after content is loaded
+        this.generateTableOfContents(post.id);
+        
+        // Add toggle functionality
+        const tocContainer = document.getElementById(`toc-${post.id}`);
+        const tocHeader = tocContainer.querySelector('h3');
+        if (tocHeader) {
+            tocHeader.addEventListener('click', () => {
+                tocContainer.classList.toggle('collapsed');
+            });
+        }
 
         // Show back button and hide nav links (home and search) when viewing a post
         const backLink = document.querySelector('.back-link');
@@ -313,7 +406,10 @@ class BlogSystem {
                         </h2>
                         <div class="post-meta">
                             <span class="post-date">${post.date}</span>
-                            <span class="post-category">${post.category}</span>
+                            <div class="category-topics-group">
+                                <span class="post-category">${post.category}</span>
+                                ${post.topics ? `<div class="post-topics">${post.topics.map(topic => `<span class="topic-tag">${topic}</span>`).join('')}</div>` : ''}
+                            </div>
                         </div>
                         <p class="post-excerpt">
                             ${post.excerpt}
@@ -403,6 +499,17 @@ class BlogSystem {
                 matchedContent.push('category');
             }
 
+            // Search in topics
+            if (post.topics) {
+                for (const topic of post.topics) {
+                    if (topic.toLowerCase().includes(searchTerm)) {
+                        matchScore += 3;
+                        matchedContent.push('topic');
+                        break; // Only count once per post
+                    }
+                }
+            }
+
             // Search in content (if available)
             try {
                 const response = await fetch(`blog/${post.filename}`);
@@ -465,7 +572,10 @@ class BlogSystem {
                 </h2>
                 <div class="post-meta">
                     <span class="post-date">${this.escapeHtml(post.date)}</span>
-                    <span class="post-category">${this.escapeHtml(post.category)}</span>
+                    <div class="category-topics-group">
+                        <span class="post-category">${this.escapeHtml(post.category)}</span>
+                        ${post.topics ? `<div class="post-topics">${post.topics.map(topic => `<span class="topic-tag">${this.escapeHtml(topic)}</span>`).join('')}</div>` : ''}
+                    </div>
                 </div>
                 <p class="post-excerpt">
                     ${post.highlightedExcerpt}
