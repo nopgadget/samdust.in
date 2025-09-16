@@ -70,6 +70,13 @@ ForEach-Object {
 Sort-Object -Property Port |
 Format-Table -AutoSize
 ```
+
+### Find Logged-on Users
+
+```powershell
+Get-CimInstance Win32_LoggedOnUser
+```
+
 ## Powershell Hacks
 
 ```powershell
